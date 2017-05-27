@@ -146,4 +146,5 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
             return -1;
         }
     }
+    return 0;
 }
