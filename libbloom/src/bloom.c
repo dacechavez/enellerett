@@ -15,7 +15,7 @@ int calculate_m(int n, float p) {
     return ceil((n * log(p)) / log(1.0 / (pow(2.0, log(2.0)))));
 }
 
-void create_bloomfilter(bloomfilter* bf, int n) {
+int create_bloomfilter(bloomfilter* bf, int n) {
     bf->n = n;
     bf->k = NUM_HASHES;
 

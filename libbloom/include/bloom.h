@@ -15,7 +15,7 @@ typedef struct {
 } bloomfilter;
 
 // the bloomc api
-void create_bloomfilter(bloomfilter* bf, int n);
+int create_bloomfilter(bloomfilter* bf, int n);
 void print_bloomfilter(bloomfilter* bf);
 void insert(bloomfilter* bf, char* str);
 int is_in(bloomfilter* bf, char* str);
