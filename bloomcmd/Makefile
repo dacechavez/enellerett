@@ -1,2 +1,2 @@
 all:
-	$(CC) -Wall -g bloomcmd.c -o bloomcmd
+	$(CC) -Wall -g bloomcmd.c -o bloomcmd.out
