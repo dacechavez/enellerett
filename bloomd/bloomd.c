@@ -38,12 +38,6 @@ int main(void) {
     // Open logs
     openlog("bloomd", LOG_PID, LOG_DAEMON);
 
-    // New process group
-    if (setsid < 0) {
-        syslog(LOG_ERR, "Failed to setsid(), errno: %s", strerror(errno));
-        exit(EXIT_FAILURE);
-    }
-
     // Change to some directory that exists
     if ((chdir("/")) < 0) {
         syslog(LOG_ERR, "Failed to chdir(), errno: %s", strerror(errno));
