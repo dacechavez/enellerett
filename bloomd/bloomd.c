@@ -66,7 +66,7 @@ int main(void) {
 
     syslog(LOG_NOTICE, "Caught SIGQUIT");
     syslog(LOG_NOTICE, "Exiting gracefully...");
-    exit(EXIT_SUCCESS);
+    return 0;
 }
 
 void bloomd_signal(int sig) {
