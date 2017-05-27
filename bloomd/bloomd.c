@@ -19,7 +19,7 @@ volatile sig_atomic_t sig_recv = 0;
 int bloomd_listen(bloomfilter*, bloomfilter*);
 void bloomd_signal(int);
 
-int main() {
+int main(void) {
     pid_t pid;
     pid = fork();
 
