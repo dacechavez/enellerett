@@ -25,7 +25,7 @@ void create_bloomfilter(bloomfilter* bf, int n) {
     bf->m = calculate_m(n, fp_probability);
     // If we want 10 bits (m = 10) then one int is the minimum we can allocate
     int bytes_needed = pos_ceil(bf->m, (sizeof(int) * 8)) * sizeof(int);
-    bf->bit_array = (uint32_t*) calloc(1, bytes_needed);
+    bf->bit_array = calloc(1, bytes_needed);
 }
 
 void insert(bloomfilter* bf, char* str) {
