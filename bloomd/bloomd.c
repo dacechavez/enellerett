@@ -75,7 +75,7 @@ void bloomd_signal(int sig) {
 
 int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
     struct sockaddr_un local, remote;
-    int fd, len;
+    int fd;
 
     // Open unix socket
     if ((fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
@@ -88,9 +88,8 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
     strncpy(local.sun_path, SOCK_PATH, sizeof(local.sun_path) - 1);
     local.sun_path[sizeof(local.sun_path) - 1] = '\0';
     unlink(local.sun_path);
-    len = strlen(local.sun_path) + sizeof(local.sun_family);
 
-    if (bind(fd, (struct sockaddr *) &local, len) == -1) {
+    if (bind(fd, (struct sockaddr *) &local, sizeof(local)) == -1) {
         syslog(LOG_ERR, "Failed to bind(), errno: %s", strerror(errno));
         return -1;
     }
