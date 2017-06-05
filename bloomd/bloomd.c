@@ -83,9 +83,10 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
         return -1;
     }
 
-
+    // Initialize our sockaddr
     local.sun_family = AF_UNIX;
-    strcpy(local.sun_path, SOCK_PATH);
+    strncpy(local.sun_path, SOCK_PATH, sizeof(local.sun_path) - 1);
+    local.sun_path[sizeof(local.sun_path) - 1] = '\0';
     unlink(local.sun_path);
     len = strlen(local.sun_path) + sizeof(local.sun_family);
 
