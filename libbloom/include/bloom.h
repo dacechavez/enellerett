@@ -15,10 +15,10 @@ typedef struct {
 } bloomfilter;
 
 // the bloomc api
-int create_bloomfilter(bloomfilter* bf, int n);
-void print_bloomfilter(bloomfilter* bf);
-void insert(bloomfilter* bf, char* str);
-int is_in(bloomfilter* bf, char* str);
+int bf_create(bloomfilter* bf, int n);
+void bf_print(bloomfilter* bf);
+void bf_insert(bloomfilter* bf, char* str);
+int bf_contains(bloomfilter* bf, char* str);
 
 // helper functions
 int test_bit(uint32_t* bit_array, int k);

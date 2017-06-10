@@ -54,10 +54,10 @@ int main(void) {
 
     // Create two bloomfilters
     bloomfilter bf_en, bf_ett;
-    create_bloomfilter(&bf_en, 200);
-    create_bloomfilter(&bf_ett, 200);
-    insert(&bf_en, "flaska");
-    insert(&bf_ett, "bord");
+    bf_create(&bf_en, 200);
+    bf_create(&bf_ett, 200);
+    bf_insert(&bf_en, "flaska");
+    bf_insert(&bf_ett, "bord");
 
     if ((bloomd_listen(&bf_en, &bf_ett)) == -1) {
         syslog(LOG_ERR, "bloomd_listen failed, exiting...");
@@ -133,9 +133,9 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
         }
 
         // ask libbloom
-        if (is_in(bf_en, buf)) {
+        if (bf_contains(bf_en, buf)) {
             rc = write(sd, "en", 5);
-        } else if (is_in(bf_ett, buf)) {
+        } else if (bf_contains(bf_ett, buf)) {
             rc = write(sd, "ett", 5);
         } else {
             rc = write(sd, "error", 5);

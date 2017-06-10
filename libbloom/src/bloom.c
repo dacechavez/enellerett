@@ -15,7 +15,7 @@ int calculate_m(int n, float p) {
     return ceil((n * log(p)) / log(1.0 / (pow(2.0, log(2.0)))));
 }
 
-int create_bloomfilter(bloomfilter* bf, int n) {
+int bf_create(bloomfilter* bf, int n) {
     bf->n = n;
     bf->k = NUM_HASHES;
 
@@ -35,14 +35,14 @@ int create_bloomfilter(bloomfilter* bf, int n) {
     return 0;
 }
 
-void insert(bloomfilter* bf, char* str) {
+void bf_insert(bloomfilter* bf, char* str) {
     for (int i = 0; i < NUM_HASHES; ++i) {
         uint32_t h = murmurhash(str, strlen(str), seeds[i]);
         set_bit(bf->bit_array, h % (bf->m));
     }
 }
 
-int is_in(bloomfilter* bf, char* str) {
+int bf_contains(bloomfilter* bf, char* str) {
     int hits = 0;
     for (int i = 0; i < NUM_HASHES; ++i) {
         uint32_t h = murmurhash(str, strlen(str), seeds[i]);

@@ -3,15 +3,15 @@
 
 int main(int argc, char const *argv[]) {
     bloomfilter bf;
-    create_bloomfilter(&bf, 10);
+    bf_create(&bf, 10);
 
     printf("number of bits =%d\n", bf.m);
 
-    insert(&bf, "stol");
-    printf("is %s in bf? %d\n", "stol", is_in(&bf, "stol"));
-    printf("is %s in bf? %d\n", "abcd", is_in(&bf, "abcd"));
-    printf("is %s in bf? %d\n", "bord", is_in(&bf, "bord"));
-    printf("is %s in bf? %d\n", "hejsan", is_in(&bf, "hejsan"));
+    bf_insert(&bf, "stol");
+    printf("is %s in bf? %d\n", "stol", bf_contains(&bf, "stol"));
+    printf("is %s in bf? %d\n", "abcd", bf_contains(&bf, "abcd"));
+    printf("is %s in bf? %d\n", "bord", bf_contains(&bf, "bord"));
+    printf("is %s in bf? %d\n", "hejsan", bf_contains(&bf, "hejsan"));
     free(bf.bit_array);
     return 0;
 }

@@ -7,43 +7,43 @@
 void test_strings() {
 	bloomfilter bf;
 
-	create_bloomfilter(&bf, 50);
-	insert(&bf, "abc");
-	insert(&bf, "foo");
-	insert(&bf, "bar");
-	insert(&bf, "baz");
-	insert(&bf, "etc");
-	insert(&bf, "a");
-	insert(&bf, "b");
-	insert(&bf, "c");
-	insert(&bf, "d");
-	insert(&bf, "e");
-	insert(&bf, "f");
-	insert(&bf, "g");
+	bf_create(&bf, 50);
+	bf_insert(&bf, "abc");
+	bf_insert(&bf, "foo");
+	bf_insert(&bf, "bar");
+	bf_insert(&bf, "baz");
+	bf_insert(&bf, "etc");
+	bf_insert(&bf, "a");
+	bf_insert(&bf, "b");
+	bf_insert(&bf, "c");
+	bf_insert(&bf, "d");
+	bf_insert(&bf, "e");
+	bf_insert(&bf, "f");
+	bf_insert(&bf, "g");
 
-	assert(is_in(&bf, "abc"));
-	assert(is_in(&bf, "foo"));
-	assert(is_in(&bf, "bar"));
-	assert(is_in(&bf, "baz"));
-	assert(is_in(&bf, "etc"));
-	assert(is_in(&bf, "a"));
-	assert(is_in(&bf, "b"));
-	assert(is_in(&bf, "c"));
-	assert(is_in(&bf, "d"));
-	assert(is_in(&bf, "e"));
-	assert(is_in(&bf, "f"));
-	assert(is_in(&bf, "g"));
+	assert(bf_contains(&bf, "abc"));
+	assert(bf_contains(&bf, "foo"));
+	assert(bf_contains(&bf, "bar"));
+	assert(bf_contains(&bf, "baz"));
+	assert(bf_contains(&bf, "etc"));
+	assert(bf_contains(&bf, "a"));
+	assert(bf_contains(&bf, "b"));
+	assert(bf_contains(&bf, "c"));
+	assert(bf_contains(&bf, "d"));
+	assert(bf_contains(&bf, "e"));
+	assert(bf_contains(&bf, "f"));
+	assert(bf_contains(&bf, "g"));
 
-	assert(!is_in(&bf, "0"));
-	assert(!is_in(&bf, "1"));
-	assert(!is_in(&bf, "2"));
-	assert(!is_in(&bf, "3"));
-	assert(!is_in(&bf, "4"));
-	assert(!is_in(&bf, "5"));
-	assert(!is_in(&bf, "6"));
-	assert(!is_in(&bf, "7"));
-	assert(!is_in(&bf, "8"));
-	assert(!is_in(&bf, "9"));
+	assert(!bf_contains(&bf, "0"));
+	assert(!bf_contains(&bf, "1"));
+	assert(!bf_contains(&bf, "2"));
+	assert(!bf_contains(&bf, "3"));
+	assert(!bf_contains(&bf, "4"));
+	assert(!bf_contains(&bf, "5"));
+	assert(!bf_contains(&bf, "6"));
+	assert(!bf_contains(&bf, "7"));
+	assert(!bf_contains(&bf, "8"));
+	assert(!bf_contains(&bf, "9"));
 
 	free(bf.bit_array);
 }

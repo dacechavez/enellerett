@@ -6,7 +6,7 @@
 
 void test_n() {
     bloomfilter bf;
-    create_bloomfilter(&bf, 10);
+    bf_create(&bf, 10);
     assert(bf.n == 10);
     free(bf.bit_array);
 }
@@ -14,7 +14,7 @@ void test_n() {
 void test_set_bits() {
     bloomfilter bf;
 
-    create_bloomfilter(&bf, 4); // State: 0000
+    bf_create(&bf, 4); // State: 0000
 
     set_bit(bf.bit_array, 0); // State: 1000
     assert(test_bit(bf.bit_array, 0));
@@ -41,25 +41,25 @@ void test_set_bits() {
     free(bf.bit_array);
 }
 
-void test_insert() {
+void test_bf_insert() {
     bloomfilter bf;
 
-    create_bloomfilter(&bf, 4); // State: 0000
+    bf_create(&bf, 4); // State: 0000
     int bits = test_bit(bf.bit_array, 0) +
                test_bit(bf.bit_array, 1) +
                test_bit(bf.bit_array, 2) +
                test_bit(bf.bit_array, 3);
     assert(bits == 0);
-    insert(&bf, "hej"); // set some bit
+    bf_insert(&bf, "hej"); // set some bit
     assert(bits == 1);
 }
 
-void test_is_in() {
+void test_bf_contains() {
     bloomfilter bf;
-    create_bloomfilter(&bf, 4);
-    assert(!is_in(&bf, "foo"));
-    insert(&bf, "foo");
-    assert(is_in(&bf, "foo"));
+    bf_create(&bf, 4);
+    assert(!bf_contains(&bf, "foo"));
+    bf_insert(&bf, "foo");
+    assert(bf_contains(&bf, "foo"));
 }
 
 
