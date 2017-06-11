@@ -75,24 +75,31 @@ int ask_daemon(char* word, int verbose) {
     n = write(sockfd, word, strlen(word));
 
     if (n < 0) {
-        perror("ERROR writing to socket");
+        perror("Error writing to socket");
         exit(1);
     }
 
-    // answer can be: en | ett | error
+    // answer can be "error", "en" or "ett"
     char answer[6];
     bzero(answer, 6);
     n = read(sockfd, answer, 5);
+    close(sockfd);
 
     if (n < 0) {
-        perror("ERROR reading from socket");
+        perror("Error reading from socket");
         exit(1);
     }
 
-    printf("server returned:[%s]\n", answer);
+    printf("Server returned: [%s]\n", answer);
 
-    close(sockfd);
-    return 0;
+    // Return with return code 2, 3 or 4  (err, en and ett respectively)
+    if (0 == strcmp(answer, "en")) {
+        return 3;
+    } else if (0 == strcmp(answer, "ett")) {
+        return 4;
+    }
+
+    return 2;
 }
 
 void usage(char* progname) {
