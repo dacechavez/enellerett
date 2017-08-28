@@ -68,7 +68,7 @@ int ask_daemon(char* word, int verbose) {
     if (connect(sockfd, (struct sockaddr *)&remote, len) == -1) {
         perror("connect()");
         fprintf(stderr, "Is bloomd running?\n");
-        return -1;
+        exit(1);
     }
 
     int n;
