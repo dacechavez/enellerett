@@ -124,7 +124,7 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
         // reset buf!
         memset(buf, 0, BUFLEN);
 
-        rc = read(sd, buf, BUFLEN);
+        rc = read(sd, buf, BUFLEN - 1);
         syslog(LOG_NOTICE, "msg:[%s]\n", buf);
 
         if (rc < 0) {
