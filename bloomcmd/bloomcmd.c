@@ -5,7 +5,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <getopt.h>
-#include <unistd.h> /* close */
+#include <unistd.h>
 
 int ask_daemon(char*, int);
 void usage(char*);
@@ -50,11 +50,11 @@ int main(int argc, char *argv[]) {
 }
 
 int ask_daemon(char* word, int verbose) {
-    int sockfd, len;
+    int sockfd, len, n;
+    char answer[6]; // answer can be "error", "en" or "ett"
     char *socket_path = "/tmp/my.sock";
     struct sockaddr_un remote;
 
-    // Open unix socket
     if ((sockfd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
         perror("socket()");
         return -1;
@@ -69,7 +69,6 @@ int ask_daemon(char* word, int verbose) {
         exit(1);
     }
 
-    int n;
     n = write(sockfd, word, strlen(word));
 
     if (n < 0) {
@@ -77,8 +76,6 @@ int ask_daemon(char* word, int verbose) {
         exit(1);
     }
 
-    // answer can be "error", "en" or "ett"
-    char answer[6];
     bzero(answer, 6);
     n = read(sockfd, answer, 5);
     close(sockfd);
