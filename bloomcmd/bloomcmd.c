@@ -46,9 +46,7 @@ int main(int argc, char *argv[]) {
     if (!word)
         usage(argv[0]);
 
-    ask_daemon(word, verbose);
-
-    return 0;
+    return ask_daemon(word, verbose);
 }
 
 int ask_daemon(char* word, int verbose) {
