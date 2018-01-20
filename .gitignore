@@ -207,7 +207,3 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
-
-# Dont track bloom web stuff
-bloomweb/
-
