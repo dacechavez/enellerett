@@ -1,6 +1,6 @@
 # enellerett
 
-Get the gender of a Swedish noun.
+Get the gender of a Swedish noun. Try it out: http://enellerett.se
 
 The components:
 
