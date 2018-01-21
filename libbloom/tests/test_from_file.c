@@ -12,11 +12,11 @@
 */
 
 void test_from_file() {
-	bloomfilter bf;
+    bloomfilter bf;
 
     // Note that we get a false positive if you change this to 2000.
     // Im increasing it just to pass the test...
-	bf_create(&bf, 20000);
+    bf_create(&bf, 20000);
 
     FILE* fp = fopen("tests/words_in_bf.txt", "r");
     char line[128];

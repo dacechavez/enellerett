@@ -1,9 +1,9 @@
 <!doctype html>
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>enellerett.se</title>
-	<link rel="stylesheet" href="/static/css/bulma.css">
+  <meta charset="utf-8">
+  <title>enellerett.se</title>
+  <link rel="stylesheet" href="/static/css/bulma.css">
   <meta name="description" content="Lookup the gender of Swedish nouns">
   <meta name="author" content="dacechavez">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,29 +12,29 @@
   <div class="box">
     <p>enellerett.se</p>
   </div>
-	<div class="container">
-		<div class="columns is-mobile is-centered">
-			<div class="column is-half is-narrow">
-				<div class="field has-addons">
-          <p class="control">
-            <form id='form' class="control">
-              <input id="noun" class="input" type="text" placeholder="stol" required
-              pattern="[A-Za-z\u00C4\u00E4\u00C5\u00E5\u00D6\u00F6]*" autofocus>
-            </form>
-          </p>
-          <p class="control">
-            <a class="button is-info" onclick="send(false);">en eller ett?</a>
-          </p>
-        </div>
-        <div id="answers"></div>
+  <div class="container">
+    <div class="columns is-mobile is-centered">
+     <div class="column is-half is-narrow">
+      <div class="field has-addons">
+        <p class="control">
+          <form id='form' class="control">
+            <input id="noun" class="input" type="text" placeholder="stol" required
+            pattern="[A-Za-z\u00C4\u00E4\u00C5\u00E5\u00D6\u00F6]*" autofocus>
+          </form>
+        </p>
+        <p class="control">
+          <a class="button is-info" onclick="send(false);">en eller ett?</a>
+        </p>
       </div>
-      <div class="column"></div>
+      <div id="answers"></div>
     </div>
+    <div class="column"></div>
   </div>
-  <script>
-    document.getElementById('form').addEventListener("submit", send);
-    function send(e) {
-      if(e) {
+</div>
+<script>
+  document.getElementById('form').addEventListener("submit", send);
+  function send(e) {
+    if(e) {
         // Form was submitted via return button
         e.preventDefault();
       } else {
