@@ -19,8 +19,13 @@ volatile sig_atomic_t sig_recv = 0;
 int bloomd_listen(bloomfilter*, bloomfilter*);
 void bloomd_signal(int);
 
-int main(void) {
+int main(int argc, char** argv) {
     pid_t pid;
+    int debug = 0;
+    if (argc > 1 && 0 == strcmp(argv[1], "debug")) {
+        debug = 1;
+    }
+
     pid = fork();
 
     if (pid < 0) {
@@ -31,12 +36,49 @@ int main(void) {
     if (pid > 0)
         exit(EXIT_SUCCESS);
 
+    // Open logs
+    openlog("bloomd", LOG_PID, LOG_DAEMON);
+
+    // Create two bloomfilters
+    bloomfilter bf_en, bf_ett;
+    // Insert data
+    if (debug) {
+        bf_create(&bf_en, 200);
+        bf_create(&bf_ett, 200);
+        bf_insert(&bf_en, "flaska");
+        bf_insert(&bf_ett, "bord");
+    } else {
+        // Data from file
+        FILE* fp = fopen("en.txt", "r");
+        char line[128];
+        int i = 0;
+        // wc -l en.txt = 68268 and libbloom should give us a false positive
+        // probability of 0.001
+        bf_create(&bf_en, 68268);
+        // wc -l ett.txt = 21285
+        bf_create(&bf_ett, 21285);
+        syslog(LOG_NOTICE, "Reading en.txt");
+        while (fgets(line, sizeof line, fp) != NULL) {
+            line[strlen(line) - 1] = '\0'; // Remove trailing newline!
+            bf_insert(&bf_en, line);
+            i++;
+        }
+        fclose(fp);
+        syslog(LOG_NOTICE, "Finished reading %d words", i);
+        fp = fopen("ett.txt", "r");
+        i = 0;
+        syslog(LOG_NOTICE, "Reading ett.txt");
+        while (fgets(line, sizeof line, fp) != NULL) {
+            line[strlen(line) - 1] = '\0'; // Remove trailing newline!
+            bf_insert(&bf_ett, line);
+            i++;
+        }
+        syslog(LOG_NOTICE, "Finished reading %d words", i);
+        fclose(fp);
+    }
 
     // Reset file permissions
     umask(0);
-
-    // Open logs
-    openlog("bloomd", LOG_PID, LOG_DAEMON);
 
     // Change to some directory that exists
     if ((chdir("/")) < 0) {
@@ -52,12 +94,6 @@ int main(void) {
     // Listen forever (or until we get a signal)
     signal(SIGQUIT, bloomd_signal);
 
-    // Create two bloomfilters
-    bloomfilter bf_en, bf_ett;
-    bf_create(&bf_en, 200);
-    bf_create(&bf_ett, 200);
-    bf_insert(&bf_en, "flaska");
-    bf_insert(&bf_ett, "bord");
 
     if ((bloomd_listen(&bf_en, &bf_ett)) == -1) {
         syslog(LOG_ERR, "bloomd_listen failed, exiting...");
@@ -100,8 +136,7 @@ int bloomd_listen(bloomfilter* bf_en, bloomfilter* bf_ett) {
     }
 
     // New file descriptor for reading, don't confuse it with the fd above
-    // which is still listening for other connections (i think thats the reason
-    // for a new file descriptor)
+    // which is still listening for other connections
     int sd;
 
     socklen_t socklen;
