@@ -26,6 +26,11 @@ test_strings: clean shared
 	$(CC) $(CFLAGS) -L. -o test_strings.out tests/test_strings.c -lbloom
 	LD_LIBRARY_PATH=. ./test_strings.out
 
+test_from_file: clean shared
+	$(CC) $(CFLAGS) -L. -o test_from_file.out tests/test_from_file.c -lbloom
+	LD_LIBRARY_PATH=. ./test_from_file.out
+
+
 
 test_valgrind: clean shared
 	$(CC) $(CFLAGS) -L. -o test_valgrind.out tests/test_valgrind.c -lbloom
