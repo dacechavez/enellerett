@@ -13,29 +13,28 @@
   <div class="box">
     <p><a href="https://github.com/dacechavez/enellerett">enellerett.se</a></p>
   </div>
-  <div class="container">
-    <div class="columns is-mobile is-centered">
-     <div class="column is-half is-narrow">
-      <div class="field has-addons">
-        <p class="control">
-          <form id='form' class="control">
-            <input id="noun" class="input" type="text" placeholder="stol" required
-            pattern="[A-Za-z\u00C4\u00E4\u00C5\u00E5\u00D6\u00F6]*\s*" autofocus>
-          </form>
-        </p>
-        <p class="control">
-          <a class="button is-primary" onclick="send(false);">en eller ett?</a>
-        </p>
+  <section class="section">
+    <div class="container">
+      <div class="columns is-mobile is-centered">
+        <div class="column">
+          <div class="field has-addons">
+            <form id='form' class="control">
+              <input id="noun" class="input" type="text" placeholder="stol" required
+              pattern="[A-Za-z\u00C4\u00E4\u00C5\u00E5\u00D6\u00F6]*\s*" autofocus>
+            </form>
+            <p class="control">
+              <a class="button is-primary" onclick="send(false);">en eller ett?</a>
+            </p>
+          </div>
+          <div id="answers"></div>
+        </div>
       </div>
-      <div id="answers"></div>
     </div>
-    <div class="column"></div>
-  </div>
-</div>
-<script>
-  document.getElementById('form').addEventListener("submit", send);
-  function send(e) {
-    if(e) {
+  </section>
+  <script>
+    document.getElementById('form').addEventListener("submit", send);
+    function send(e) {
+      if(e) {
         // Form was submitted via return button
         e.preventDefault();
       } else {
@@ -46,12 +45,12 @@
       xhr.open('POST', '/substantiv');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
       xhr.onload = function() {
-        if (xhr.status === 200) {
-          var ret = xhr.responseText;
-          if (ret != '_evil') {
-            var resp = document.createElement('p');
-            resp.innerHTML = '<p>' + ret + '</p>';
-            document.getElementById('answers').appendChild(resp);
+       if (xhr.status === 200) {
+        var ret = xhr.responseText;
+        if (ret != '_evil') {
+         var resp = document.createElement('p');
+         resp.innerHTML = '<p>' + ret + '</p>';
+         document.getElementById('answers').appendChild(resp);
             // Clear the input field so that the user doesnt have to
             document.getElementById('noun').value = '';
           }
