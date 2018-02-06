@@ -5,7 +5,7 @@ import re
 
 # Flask app instance
 app = Flask(__name__)
-p = re.compile("^[a-zåäö]+$", re.IGNORECASE)
+p = re.compile("^[a-zåäö]+\s*$", re.IGNORECASE)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
@@ -17,8 +17,8 @@ def substantiv_post():
     noun = request.form['noun']
     if not p.match(noun):
         return "_evil"
-    print('got: {}'.format(noun))
-    noun = noun.lower()
+    print('got: [{}]'.format(noun))
+    noun = noun.lower().strip()
     res = run(["../bloomcmd/bloomcmd.out", "-w", noun], stdout=PIPE)
     gender = 'The noun "{}" was not found'.format(noun)
     if res.returncode == 3:
