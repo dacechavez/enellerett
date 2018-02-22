@@ -5,7 +5,7 @@ import re
 
 # Flask app instance
 app = Flask(__name__)
-p = re.compile("^[a-zåäö]+\s*$", re.IGNORECASE)
+p = re.compile("^[\wåäö]+\s*([\wåäö]+\s*)*$", re.IGNORECASE)
 
 @app.route('/', defaults={'path': ''})
 @app.route('/<path:path>')
