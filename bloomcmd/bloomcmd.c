@@ -7,23 +7,21 @@
 #include <getopt.h>
 #include <unistd.h>
 
-int ask_daemon(char*, int);
+int ask_daemon(char*);
 void usage(char*);
 
 int main(int argc, char *argv[]) {
     int c;
     char* word = 0x0;
-    int verbose = 0;
 
     while (1) {
         int option_index = 0;
         static struct option long_options[] = {
             {"word",    required_argument, 0,  'w' },
-            {"verbose", no_argument,       0,  'v' },
             {0,         0,                 0,  0 }
         };
 
-        c = getopt_long(argc, argv, "vw:",
+        c = getopt_long(argc, argv, "w:",
                         long_options, &option_index);
         if (c == -1)
             break;
@@ -31,9 +29,6 @@ int main(int argc, char *argv[]) {
         switch (c) {
         case 'w':
             word = optarg;
-            break;
-        case 'v':
-            verbose = 1;
             break;
         case '?':
             usage(argv[0]);
@@ -46,10 +41,10 @@ int main(int argc, char *argv[]) {
     if (!word)
         usage(argv[0]);
 
-    return ask_daemon(word, verbose);
+    return ask_daemon(word);
 }
 
-int ask_daemon(char* word, int verbose) {
+int ask_daemon(char* word) {
     int sockfd, len, n;
     char answer[6]; // answer can be "error", "en" or "ett"
     char *socket_path = "/tmp/my.sock";
@@ -98,6 +93,6 @@ int ask_daemon(char* word, int verbose) {
 }
 
 void usage(char* progname) {
-    fprintf(stderr, "Usage: %s [--verbose] -w word\n", progname);
+    fprintf(stderr, "Usage: %s -w word\n", progname);
     exit(1);
 }
