@@ -13,6 +13,7 @@ declare -a arr=("crêpe"
   "salladsbuffé"
   "struktur"
   "bord"
+  "cyklop"
   "crème de la crème"
   "crème fraiche"
 )

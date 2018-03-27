@@ -3,7 +3,6 @@ from subprocess import run, PIPE
 import re
 
 
-# Flask app instance
 app = Flask(__name__)
 p = re.compile("^[\wåäö]+\s*([\wåäö]+\s*)*$", re.IGNORECASE)
 
@@ -20,11 +19,14 @@ def substantiv_post():
     print('got: [{}]'.format(noun))
     noun = noun.lower().strip()
     res = run(["../bloomcmd/bloomcmd.out", "-w", noun], stdout=PIPE)
-    gender = 'The noun "{}" was not found'.format(noun)
+    gender = 'Substantivet "{}" hittades inte'.format(noun)
     if res.returncode == 3:
         gender = 'En {}'.format(noun)
     elif res.returncode == 4:
         gender = 'Ett {}'.format(noun)
+    elif res.returncode == 5:
+        gender = 'En eller ett {} beroende på kontext'.format(noun)
+
     return gender
 
 if __name__ == '__main__':
