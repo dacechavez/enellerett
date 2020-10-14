@@ -16,7 +16,7 @@ void test_from_file() {
 
     // Note that we get a false positive if you change this to 2000.
     // Im increasing it just to pass the test...
-    bf_create(&bf, 20000);
+    bf_init(&bf, 20000);
 
     FILE* fp = fopen("tests/words_in_bf.txt", "r");
     char line[128];
@@ -42,7 +42,7 @@ void test_from_file() {
     }
 
     fclose(fp);
-    free(bf.bit_array);
+    bf_cleanup(&bf);
 }
 
 int main() {

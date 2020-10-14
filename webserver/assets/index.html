@@ -3,11 +3,12 @@
 <head>
   <meta charset="utf-8">
   <title>enellerett.se</title>
-  <link rel="stylesheet" href="/static/css/bulma.css">
+  <link rel="stylesheet" href="bulma.css">
   <meta name="description" content="Lookup the gender of Swedish nouns">
-  <meta name="author" content="dacechavez">
+  	<meta name="keywords" content="swedish nouns gender en ett substantiv" />
+  <meta name="author" content="Daniel Chavez">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="shortcut icon" type="image/x-icon" href="/static/favicon.ico"/>
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico"/>
 </head>
 <body>
   <div class="box">
@@ -49,13 +50,19 @@
       xhr.onload = function() {
         if (xhr.status === 200) {
           var ret = xhr.responseText;
-          if (ret != '_evil') {
-            var resp = document.createElement('p');
-            resp.innerHTML = '<p>' + ret + '</p>';
-            document.getElementById('answers').appendChild(resp);
-            // Clear the input field so that the user doesnt have to
-            document.getElementById('noun').value = '';
+          var resp = document.createElement('p');
+          // Clear the input field so that the user doesnt have to
+          document.getElementById('noun').value = '';
+          if (ret == 'en' || ret == 'ett') {
+            resp.innerHTML = '<p>' + ret + ' ' + noun + '</p>';
+          } else if (ret == 'both') {
+            resp.innerHTML = '<p>en eller ett ' + noun + ' beroende på kontext</p>';
+          } else if (ret == 'not found') {
+            resp.innerHTML = '<p>kunde inte hitta substantivet ' + noun + '</p>';
+          } else {
+            resp.innerHTML = '<p>något gick fel vid sökandet</p>';
           }
+            document.getElementById('answers').appendChild(resp);
         }
       };
       xhr.send('noun=' + noun);
